@@ -5,7 +5,8 @@ from InfoPlatform import db
 
 
 class Company(db.Model):
-    CID = db.Column(db.Integer, primary_key=True, nullable=False)
+    CID = db.Column(db.Integer, primary_key=True,
+                    nullable=False, autoincrement=True)
     CName = db.Column(db.String(1024), nullable=False)
     Corporate = db.Column(db.String(1024))
     Cphone = db.Column(db.String(11), unique=True, nullable=False)
@@ -15,41 +16,48 @@ class Company(db.Model):
 
 
 class Project(db.Model):
-    PID = db.Column(db.Integer, primary_key=True, nullable=False)
+    PID = db.Column(db.Integer, primary_key=True,
+                    nullable=False, autoincrement=True)
     PName = db.Column(db.String(1024), nullable=False)
     PAddress = db.Column(db.Text, nullable=False)
     JID = db.relationship('Jobs', backref='Project')
     CID = db.Column(db.Integer, db.ForeignKey('Company.CID'))
     PMID = db.relationship('ProjectManager', backref='Project')
 
+
 class ProjectManager(db.Model):
-    PMID = db.Column(db.Integer, primary_key=True, nullable=False)
+    PMID = db.Column(db.Integer, primary_key=True,
+                     nullable=False, autoincrement=True)
     AID = db.relationship('Authority', backref='ProjectManager', uselist=False)
     BID = db.relationship('BasicInfo', backref='ProjectManager', uselist=False)
     PID = db.Column(db.Integer, db.ForeignKey('Project.PID'))
 
 
 class CompanyManager(db.Model):
-    CMID = db.Column(db.Integer, primary_key=True, nullable=False)
+    CMID = db.Column(db.Integer, primary_key=True,
+                     nullable=False, autoincrement=True)
     CID = db.Column(db.Integer, db.ForeignKey('Company.CID'))
     AID = db.relationship('Authority', backref='CompanyManager', uselist=False)
     BID = db.relationship('BasicInfo', backref='CompanyManager', uselist=False)
 
 
 class BasicInfo(db.Model):
-    BID = db.Column(db.Integer, primary_key=True, nullable=False)
+    BID = db.Column(db.Integer, primary_key=True,
+                    nullable=False, autoincrement=True)
     BName = db.Column(db.String(1024), nullable=False)
-    BPortrait = db.Column(db.LargeBinary(length=4096), nullable=False)
+    BPortrait = db.Column(db.LargeBinary(length=4096))
     Bphone = db.Column(db.String(11), unique=True, nullable=False)
     IDCard = db.Column(db.String(18), nullable=False)
     UserType = db.Column(db.Integer, nullable=False)
+    Password = db.Column(db.String(18), nullable=False)
     PMID = db.Column(db.Integer, db.ForeignKey('ProjectManager.PMID'))
     CMID = db.Column(db.Integer, db.ForeignKey('CompanyManager.CMID'))
     CAID = db.Column(db.Integer, db.ForeignKey('Candidate.CAID'))
-    
+
 
 class Candidate(db.Model):
-    CAID = db.Column(db.Integer, primary_key=True, nullable=False)
+    CAID = db.Column(db.Integer, primary_key=True,
+                     nullable=False, autoincrement=True)
     Ccategory = db.Column(db.String(1024), nullable=False)
     health = db.Column(db.LargeBinary(length=4096))
     Cexperience = db.Column(db.Integer)
@@ -61,7 +69,8 @@ class Candidate(db.Model):
 
 
 class Jobs(db.Model):
-    JID = db.Column(db.Integer, primary_key=True, nullable=False)
+    JID = db.Column(db.Integer, primary_key=True,
+                    nullable=False, autoincrement=True)
     Jname = db.Column(db.String(1024), nullable=False)
     salary = db.Column(db.float(precision="10,2"))
     Jcategory = db.Column(db.String(1024))
@@ -71,7 +80,8 @@ class Jobs(db.Model):
 
 
 class Authority(db.Model):
-    AID = db.Column(db.Integer, primary_key=True, nullable=False)
+    AID = db.Column(db.Integer, primary_key=True,
+                    nullable=False, autoincrement=True)
     editfile = db.Colume(db.Boolean, nullable=False)
     checkbasicinfo = db.Colume(db.Boolean, nullable=False)
     sendoffer = db.Colume(db.Boolean, nullable=False)
