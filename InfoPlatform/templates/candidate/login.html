@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  
+<meta http-equiv="pragma" content="no-cache"> 
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate"> 
+<meta http-equiv="expires" content="Wed, 26 Feb 1997 08:21:57 GMT">
+
+  <title>ZYB's Assignment</title>
+  <link rel="stylesheet" href="static/css/login_style.css">
+
+</head>
+<body>
+<div class="wrapper">
+	<div class="container">
+		<h1>Welcome</h1>
+		<form class="form" method="POST">
+			<input type="text" placeholder="Phone Number" name="username">
+			<input type="password" placeholder="Password" name="password">
+            <button type="submit" id="login-button">Login</button>
+            <br>  <br>
+            <!-- <h3>密码不需要与QQ密码一致</h3>  -->
+            <br>
+            {% for message in get_flashed_messages() %}
+                    {{ message }}
+            {% endfor %}
+		</form>
+	</div>
+	
+	<ul class="bg-bubbles">
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+	</ul>
+</div>
+</body>
+</html>
