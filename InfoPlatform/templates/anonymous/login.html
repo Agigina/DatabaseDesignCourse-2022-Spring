@@ -14,12 +14,13 @@
 <body>
 <div class="wrapper">
 	<div class="container">
-		<h1>Welcome</h1>
+		<h1>登陆</h1>
 		<form class="form" method="POST">
-			<input type="text" placeholder="Phone Number" name="username">
-			<input type="password" placeholder="Password" name="password">
-            <button type="submit" id="login-button">Login</button>
+			<input type="text" placeholder="手机号码" name="username">
+			<input type="password" placeholder="密码" name="password">
+            <button type="submit" id="login-button">登陆</button>
             <br>  <br>
+            <a href="/register">还没有账号？点击此处注册。</a>
             <!-- <h3>密码不需要与QQ密码一致</h3>  -->
             <br>
             {% for message in get_flashed_messages() %}

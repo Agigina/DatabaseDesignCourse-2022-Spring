@@ -12,7 +12,7 @@ def login():
     # if current_user.is_authenticated:
     #     return redirect(url_for('blog.index'))
 
-    # form = LoginForm()
+    form = LoginForm()
     # if form.validate_on_submit():
     #     username = form.username.data
     #     password = form.password.data
@@ -26,4 +26,5 @@ def login():
     #         flash('Invalid username or password.', 'warning')
     #     else:
     #         flash('No account.', 'warning')
-    return render_template('candidate/login.html', form=form)
+    # return render_template('candidate/login.html', form=form)
+    return "ASAS"

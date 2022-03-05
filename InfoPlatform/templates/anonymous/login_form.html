@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  
+<meta http-equiv="pragma" content="no-cache"> 
+<meta http-equiv="Cache-Control" content="no-cache, must-revalidate"> 
+<meta http-equiv="expires" content="Wed, 26 Feb 1997 08:21:57 GMT">
+
+  <title>ZYB's Assignment</title>
+  <link rel="stylesheet" href="static/css/login_style.css">
+
+</head>
+<body>
+<div class="wrapper">
+	<div class="container">
+		<h1>登陆</h1>
+        <form class="form" method="POST">
+            {{form.csrf_token}}
+            {{form.phone}}
+            {{form.password}}
+            <button type="submit" id="login-button">登陆</button>
+            <br>  <br>
+            <a href="/register">还没有账号？点击此处注册。</a>
+        </form>
+	</div>
+	
+	<ul class="bg-bubbles">
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+	</ul>
+</div>
+</body>
+</html>
