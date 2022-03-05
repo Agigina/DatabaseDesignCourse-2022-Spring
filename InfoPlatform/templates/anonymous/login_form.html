@@ -22,6 +22,10 @@
             <button type="submit" id="login-button">登陆</button>
             <br>  <br>
             <a href="/register">还没有账号？点击此处注册。</a>
+            <br>
+            {% for message in get_flashed_messages() %}
+                    {{ message }}
+            {% endfor %}
         </form>
 	</div>
 	

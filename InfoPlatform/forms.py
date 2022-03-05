@@ -19,7 +19,7 @@ class LoginForm(FlaskForm):
                         render_kw={'placeholder': "手机号码"},
                         validators=[InputRequired(), DataRequired(),
                                     Regexp(
-                            r"/^(?:(?:\+|00)86)?1(?:(?:3[\d])|(?:4[5-7|9])|(?:5[0-3|5-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\d])|(?:9[1|8|9]))\d{8}$/",
+                            r"^1(3\d|4[4-9]|5[0-35-9]|6[67]|7[013-8]|8[0-9]|9[0-9])\d{8}$",
                             message="Incorrect phone number")])
     password = PasswordField('Password',
                              render_kw={'placeholder': "密码"},
@@ -28,18 +28,33 @@ class LoginForm(FlaskForm):
 
 
 class RegisterForm(FlaskForm):
-    fname = StringField('Name', validators=[DataRequired(), Length(1, 64)])
-    lname = StringField('Name', validators=[DataRequired(), Length(1, 64)])
-    Address = StringField('Name')
-    phone = StringField('Phone', validators=[InputRequired(), DataRequired(), Regexp(
-        r"/^(?:(?:\+|00)86)?1(?:(?:3[\d])|(?:4[5-7|9])|(?:5[0-3|5-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\d])|(?:9[1|8|9]))\d{8}$/", message="Incorrect phone number")])
-    password = PasswordField('Password', validators=[
-                             DataRequired(), Length(min=6), EqualTo('password2')])
-    password2 = PasswordField('Confirm Password', validators=[DataRequired()])
-    IDCard = StringField('IDCard', validators=[DataRequired(), Regexp(
-        r'/^\d{6}(18|19|20)\d{2}(0\d|10|11|12)([0-2]\d|30|31)\d{3}(\d|X|x)$/')])
+    fname = StringField('Name',
+                        render_kw={'placeholder': "姓氏"},
+                        validators=[DataRequired(), Length(1, 64)])
+    lname = StringField('Name',
+                        render_kw={'placeholder': "名"},
+                        validators=[DataRequired(), Length(1, 64)])
+    Address = StringField('Name',
+                          render_kw={'placeholder': "地址"})
+    phone = StringField('Phone',
+                        render_kw={'placeholder': "手机号码"},
+                        validators=[InputRequired(), DataRequired(), Regexp(
+                            r"^1(3\d|4[4-9]|5[0-35-9]|6[67]|7[013-8]|8[0-9]|9[0-9])\d{8}$", message="Incorrect phone number")])
+    password = PasswordField('Password',
+                             render_kw={'placeholder': "密码"},
+                             validators=[
+                                 DataRequired(), Length(min=6), EqualTo('password2')])
+    password2 = PasswordField('Confirm Password',
+                              render_kw={'placeholder': "确认密码"},
+                              validators=[DataRequired()])
+    IDCard = StringField('IDCard',
+                         render_kw={'placeholder': "身份证号"},
+                         validators=[DataRequired(), Regexp(
+                             r'/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$')])
     # UserType=BooleanField('Are u a worker')
-    email = StringField('Email', validators=[Email(), Length(1, 254)])
+    email = StringField('Email',
+                        render_kw={'placeholder': "电子邮箱（可选）"},
+                        validators=[Email(), Length(1, 254)])
     submit = SubmitField('Submit')
 
 

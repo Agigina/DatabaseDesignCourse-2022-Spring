@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, Blueprint, request
 from flask_login import login_user, logout_user, login_required, current_user
 
-from InfoPlatform.forms import LoginForm
+from InfoPlatform.forms import LoginForm,RegisterForm
 from InfoPlatform.models import Candidate, CompanyManager, ProjectManager, BasicInfo
 from InfoPlatform.utils import redirect_back
 
@@ -10,35 +10,38 @@ anonymous_bp = Blueprint('anonymous', __name__)
 
 @anonymous_bp.route('/', methods=['GET', 'POST'])
 def login():
-    # # return "a"
     # if current_user.is_authenticated:
     #     # 分类返回
     #     return redirect(url_for('candidate'))
-
     form = LoginForm()
-    # if form.validate_on_submit():
-    #     phone = form.phone.data
-    #     password = form.password.data
-    #     remember = form.remember.data
-    #     admin = BasicInfo.query.filter(BasicInfo.Bphone == phone).first()
-    #     if admin:
-    #         if admin.Password == password:
-    #             login_user(admin, remember)
-    #             if admin.PMID:
-    #                 return redirect(url_for('projectManager'))
-    #             elif admin.CMID:
-    #                 return redirect(url_for('companyManager'))
-    #             elif admin.CAID:
-    #                 return redirect(url_for('candidate'))
-    #             return redirect_back()
-    #         flash('账号或密码不正确', 'warning')
-    #     else:
-    #         flash('账户不存在，请注册。', 'warning')
+    if form.validate_on_submit():
+        phone = form.phone.data
+        password = form.password.data
+        # remember = form.remember.data
+        admin = BasicInfo.query.filter(BasicInfo.Bphone == phone).first()
+        if admin:
+            print("admin")
+            if admin.Password == password:
+                login_user(admin)
+                if admin.PMID:
+                    return redirect(url_for('projectManager'))
+                elif admin.CMID:
+                    return redirect(url_for('companyManager'))
+                elif admin.CAID:
+                    return redirect(url_for('candidate'))
+                return redirect_back()
+            flash('账号或密码不正确', 'warning')
+        else:
+            print("no")
+            flash('账户不存在，请注册。', 'warning')
+    else:
+        print("invalid")
     return render_template("anonymous/login_form.html",form=form)
 
 
 @anonymous_bp.route('/register', methods=['GET', 'POST'])
 def register():
+    form=RegisterForm()
     if current_user.is_authenticated:
         return redirect(url_for('candidate'))
 
@@ -63,4 +66,4 @@ def register():
         login_user(user, remember=True)
         return redirect(url_for('chat.profile'))
 
-    return render_template("anonymous/register.html")
+    return render_template("anonymous/register_form.html",form=form)
