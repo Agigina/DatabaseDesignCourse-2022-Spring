@@ -27,9 +27,9 @@ def create_app(config_name=None):
     # register_logging(app)
     register_extensions(app)
     register_blueprints(app)
-    # register_commands(app)
+    register_commands(app)
     # register_errors(app)
-    # register_shell_context(app)
+    register_shell_context(app)
     # register_template_context(app)
     # register_request_handlers(app)
     return app
@@ -66,3 +66,15 @@ def register_blueprints(app):
     # app.register_blueprint(admin_bp, url_prefix='/admin')
     # app.register_blueprint(auth_bp, url_prefix='/auth')
 
+def register_shell_context(app):
+    @app.shell_context_processor
+    def make_shell_context():
+        return dict(db=db, Admin=Admin, Post=Post, Category=Category, Comment=Comment)
+
+
+def register_commands(app):
+    @app.cli.command()
+    def forge():
+        db.drop_all()
+        db.create_all()
+        click.echo('Done.')

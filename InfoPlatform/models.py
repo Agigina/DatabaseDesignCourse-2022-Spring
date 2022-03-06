@@ -7,8 +7,8 @@ class Company(db.Model):
     Corporate = db.Column(db.String(1024))
     Cphone = db.Column(db.String(11), unique=True, nullable=False)
     CInofrmation = db.Column(db.Text)
-    PID = db.relationship('Project', backref='Company')
-    CMID = db.relationship('CompanyManager', backref='Company')
+    PID = db.relationship('Project')
+    CMID = db.relationship('CompanyManager')
 
 
 class Project(db.Model):
@@ -16,25 +16,27 @@ class Project(db.Model):
                     nullable=False, autoincrement=True)
     PName = db.Column(db.String(1024), nullable=False)
     PAddress = db.Column(db.Text, nullable=False)
-    JID = db.relationship('Jobs', backref='Project')
-    CID = db.Column(db.Integer, db.ForeignKey('Company.CID'))
-    PMID = db.relationship('ProjectManager', backref='Project')
+    JID = db.relationship('Jobs')
+    CID = db.Column(db.Integer, db.ForeignKey('company.CID'))
+    PMID = db.relationship('ProjectManager')
 
 
 class ProjectManager(db.Model):
     PMID = db.Column(db.Integer, primary_key=True,
                      nullable=False, autoincrement=True)
-    AID = db.relationship('Authority', backref='ProjectManager', uselist=False)
-    BID = db.relationship('BasicInfo', backref='ProjectManager', uselist=False)
-    PID = db.Column(db.Integer, db.ForeignKey('Project.PID'))
+    authority = db.relationship('Authority', back_populates='project_manager', uselist=False)
+    BID = db.Column(db.Integer, db.ForeignKey('basic_info.BID'))
+    PID = db.Column(db.Integer, db.ForeignKey('project.PID'))
+    basic_info=db.relationship('BasicInfo',back_populates='project_manager')
 
 
 class CompanyManager(db.Model):
     CMID = db.Column(db.Integer, primary_key=True,
                      nullable=False, autoincrement=True)
-    CID = db.Column(db.Integer, db.ForeignKey('Company.CID'))
-    AID = db.relationship('Authority', backref='CompanyManager', uselist=False)
-    BID = db.relationship('BasicInfo', backref='CompanyManager', uselist=False)
+    CID = db.Column(db.Integer, db.ForeignKey('company.CID'))
+    authority = db.relationship('Authority', back_populates='company_manager', uselist=False)
+    BID = db.Column(db.Integer, db.ForeignKey('basic_info.BID'))
+    basic_info=db.relationship('BasicInfo',back_populates='company_manager')
 
 
 class BasicInfo(db.Model):
@@ -49,9 +51,9 @@ class BasicInfo(db.Model):
     Bemail=db.Column(db.String(1024), nullable=False)
     BAddress=db.Column(db.Text)
 
-    PMID = db.Column(db.Integer, db.ForeignKey('ProjectManager.PMID'))
-    CMID = db.Column(db.Integer, db.ForeignKey('CompanyManager.CMID'))
-    CAID = db.Column(db.Integer, db.ForeignKey('Candidate.CAID'))
+    project_manager = db.relationship('ProjectManager', back_populates='basic_info', uselist=False)
+    company_manager = db.relationship('CompanyManager', back_populates='basic_info', uselist=False)
+    candidate = db.relationship('Candidate', back_populates='basic_info', uselist=False)
 
 
 class Candidate(db.Model):
@@ -64,7 +66,8 @@ class Candidate(db.Model):
     status = db.Column(db.Boolean, nullable=False)
     certification = db.Column(db.LargeBinary(length=4096))
     moreInfo = db.Column(db.Text)
-    BID = db.relationship('BasicInfo', backref='Candidate', uselist=False)
+    BID = db.Column(db.Integer, db.ForeignKey('basic_info.BID'))
+    basic_info=db.relationship('BasicInfo',back_populates='candidate')
 
 class Jobs(db.Model):
     JID = db.Column(db.Integer, primary_key=True,
@@ -74,7 +77,7 @@ class Jobs(db.Model):
     Jcategory = db.Column(db.String(1024))
     Jinformation = db.Column(db.Text, nullable=False)
     Jexperience = db.Column(db.Integer)
-    PID = db.Column(db.Integer, db.ForeignKey('Project.PID'))
+    PID = db.Column(db.Integer, db.ForeignKey('project.PID'))
 
 
 class Authority(db.Model):
@@ -84,5 +87,7 @@ class Authority(db.Model):
     checkbasicinfo = db.Column(db.Boolean, nullable=False)
     sendoffer = db.Column(db.Boolean, nullable=False)
     editoffer = db.Column(db.Boolean, nullable=False)
-    PMID = db.Column(db.Integer, db.ForeignKey('ProjectManager.PMID'))
-    CMID = db.Column(db.Integer, db.ForeignKey('CompanyManager.CMID'))
+    PMID = db.Column(db.Integer, db.ForeignKey('project_manager.PMID'))
+    project_manager=db.relationship('ProjectManager',back_populates='authority')
+    CMID = db.Column(db.Integer, db.ForeignKey('company_manager.CMID'))
+    company_manager=db.relationship('CompanyManager',back_populates='authority')
