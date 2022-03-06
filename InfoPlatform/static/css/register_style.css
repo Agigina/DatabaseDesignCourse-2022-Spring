@@ -52,6 +52,31 @@ body {
 	color: #2C3E50;
 	font-size: 13px;
 }
+/* #msform button{
+	padding: 15px;
+	border: 0 none;
+    background: #27AE60;
+	border-radius: 1px;
+	margin-bottom: 10px;
+	width: 100px;
+    color: white;
+	box-sizing: border-box;
+	font-family: montserrat;
+	font-size: 13px;
+    font-weight: bold;
+} */
+#msform button {
+	width: 100px;
+	background: #27AE60;
+	font-weight: bold;
+	color: white;
+	border: 0 none;
+	border-radius: 1px;
+	cursor: pointer;
+	padding: 10px 5px;
+	margin: 10px 5px;
+}
+
 /*buttons*/
 #msform .action-button {
 	width: 100px;

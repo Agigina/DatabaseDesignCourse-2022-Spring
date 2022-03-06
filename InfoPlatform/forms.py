@@ -37,7 +37,7 @@ class RegisterForm(FlaskForm):
     Address = StringField('Name',
                           render_kw={'placeholder': "地址"})
     phone = StringField('Phone',
-                        render_kw={'placeholder': "手机号码"},
+                        render_kw={'placeholder': "手机号码","type":"text","required":"required"},
                         validators=[InputRequired(), DataRequired(), Regexp(
                             r"^1(3\d|4[4-9]|5[0-35-9]|6[67]|7[013-8]|8[0-9]|9[0-9])\d{8}$", message="Incorrect phone number")])
     password = PasswordField('Password',
@@ -54,7 +54,7 @@ class RegisterForm(FlaskForm):
     # UserType=BooleanField('Are u a worker')
     email = StringField('Email',
                         render_kw={'placeholder': "电子邮箱（可选）"},
-                        validators=[Email(), Length(1, 254)])
+                        validators=[Email()])
     submit = SubmitField('Submit')
 
 

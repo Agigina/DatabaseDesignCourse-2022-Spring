@@ -1,46 +1,42 @@
 <!DOCTYPE html>
-<html lang="en" >
-<head>
-  <meta charset="UTF-8">
-  
-<meta http-equiv="pragma" content="no-cache"> 
-<meta http-equiv="Cache-Control" content="no-cache, must-revalidate"> 
-<meta http-equiv="expires" content="Wed, 26 Feb 1997 08:21:57 GMT">
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
 
-  <title>ZYB's Assignment</title>
-  <link rel="stylesheet" href="static/css/login_style.css">
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+    <meta http-equiv="expires" content="Wed, 26 Feb 1997 08:21:57 GMT" />
 
-</head>
-<body>
-<div class="wrapper">
-	<div class="container">
-		<h1>登陆</h1>
+    <title>ZYB's Assignment</title>
+    <link rel="stylesheet" href="static/css/login_style.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="container">
+        <h1>登陆</h1>
         <form class="form" method="POST">
-            {{form.csrf_token}}
-            {{form.phone}}
-            {{form.password}}
-            <button type="submit" id="login-button">登陆</button>
-            <br>  <br>
-            <a href="/register">还没有账号？点击此处注册。</a>
-            <br>
-            {% for message in get_flashed_messages() %}
-                    {{ message }}
-            {% endfor %}
+          {{form.csrf_token}} {{form.phone}} {{form.password}}
+          <button type="submit" id="login-button">登陆</button>
+          <br />
+          <br />
+          <a href="/register">还没有账号？点击此处注册。</a>
+          <br />
+          {% for message in get_flashed_messages() %} {{ message }} {% endfor %}
         </form>
-	</div>
-	
-	<ul class="bg-bubbles">
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-		<li></li>
-	</ul>
-</div>
-</body>
+      </div>
+
+      <ul class="bg-bubbles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+  </body>
 </html>
