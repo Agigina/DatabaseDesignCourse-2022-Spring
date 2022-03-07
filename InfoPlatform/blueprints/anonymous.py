@@ -16,12 +16,12 @@ def login():
         # remember = form.remember.data
         admin = BasicInfo.query.filter(BasicInfo.Bphone == phone).first()
         if admin:
-            print("admin")
+            print(admin)
             if admin.Password == password:
                 login_user(admin)
-                if admin.UserType==0:
+                if admin.UserType==1:
                     return redirect(url_for('candidate.home'))
-                elif admin.UserType==1:
+                elif admin.UserType==0:
                     return redirect(url_for('companyManager'))
                 return redirect_back()
             flash('账号或密码不正确', 'warning')

@@ -11,7 +11,7 @@ class Company(db.Model):
     CInformation = db.Column(db.Text)
     PID = db.relationship('Project')
     CMID = db.relationship('CompanyManager')
-
+    CPortrait = db.Column(db.LargeBinary(length=4096))
 
 class Project(db.Model):
     PID = db.Column(db.Integer, primary_key=True,
@@ -21,9 +21,10 @@ class Project(db.Model):
     JID = db.relationship('Jobs')
     CID = db.Column(db.Integer, db.ForeignKey('company.CID'))
     PMID = db.relationship('ProjectManager')
+    PPortrait = db.Column(db.LargeBinary(length=4096))
 
 
-class ProjectManager(db.Model):
+class ProjectManager(db.Model, UserMixin):
     PMID = db.Column(db.Integer, primary_key=True,
                      nullable=False, autoincrement=True)
     authority = db.relationship(
@@ -33,7 +34,7 @@ class ProjectManager(db.Model):
     basic_info = db.relationship('BasicInfo', back_populates='project_manager')
 
 
-class CompanyManager(db.Model):
+class CompanyManager(db.Model, UserMixin):
     CMID = db.Column(db.Integer, primary_key=True,
                      nullable=False, autoincrement=True)
     CID = db.Column(db.Integer, db.ForeignKey('company.CID'))
@@ -64,7 +65,7 @@ class BasicInfo(db.Model, UserMixin):
         'Candidate', back_populates='basic_info', uselist=False)
 
 
-class Candidate(db.Model):
+class Candidate(db.Model, UserMixin):
     CAID = db.Column(db.Integer, primary_key=True,
                      nullable=False, autoincrement=True)
     Ccategory = db.Column(db.String(1024))
@@ -89,6 +90,7 @@ class Jobs(db.Model):
     Jexperience = db.Column(db.Integer)
     JBegin = db.Column(db.DateTime)
     JFinal = db.Column(db.DateTime)
+    Jddl=db.Column(db.DateTime)
     PID = db.Column(db.Integer, db.ForeignKey('project.PID'))
     APID = db.relationship('Applying')
 

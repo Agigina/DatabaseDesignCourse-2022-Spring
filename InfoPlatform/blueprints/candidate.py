@@ -2,38 +2,65 @@ from flask import render_template, flash, redirect, request, url_for, Blueprint
 from flask_login import login_user, logout_user, login_required, current_user
 
 from InfoPlatform.forms import LoginForm
-from InfoPlatform.models import Candidate
+from InfoPlatform.models import Candidate, BasicInfo, Company, Project, Jobs, Applying
 from InfoPlatform.utils import redirect_back
 import datetime
+import base64
 
 candidate_bp = Blueprint('candidate', __name__)
 
+color_map=[["#fee4cb","#ff942e"],["#e9e7fd","#4f3ff0"],["#dbf6fd","#096c86"],["#ffd3e2","#df3670"],
+["#c8f7dc","#34c471"],["#d5deff","#4067f9"],["#F6EEE0","#E4B7A0"],["#FADCD9","#F79489"],["#ECE3F0","#D3BBDD"]
+]
+
 @candidate_bp.route('/home', methods=['GET', 'POST'])
 def home():
-    # if current_user.is_authenticated:
-    if True:
-        applying_list=[]
+    # print(current_user)
+    if current_user.is_authenticated:
+        applying_list = []
         # 这个直接查询applying表
-        available_job=[]
+        available_job = []
+        applies = Applying.query.filter(
+            Applying.CAID == current_user.get_id()).all()
+        for item in applies:
+            job = Jobs.query.filter(Jobs.JID == item.JID).first()
+            proj = Project.query.filter(Project.PID == job.PID).first()
+            apply_time = "申请时间："+str(item.applytime.date())
+            status_now = "等待中" if item.status == 0 else "通过" if item.status == 1 else "拒绝"
+            applying_list.append({"applytime": apply_time, "status": status_now, "proj_name": proj.PName,
+                                 "job_name": job.Jname, "Info": "类型："+str(job.Jcategory)+"，信息："+str(job.Jinformation),
+                                  "PPortrait": proj.PPortrait.decode('ascii')})
 
         if request.method == 'POST':
             search_name = request.form['search_name']
             print(search_name)
-        today=datetime.date.today()
-        time_str=str(today.year)+"年"+str(today.month)+"月"+str(today.day)+"日"
-        recruiting=12
+        else:
+            jobs = Jobs.query.all()
+            for i, item in enumerate(jobs):
+                proj = Project.query.filter(Project.PID == item.PID).first()
+                if i>=len(color_map):
+                    i-=len(color_map)
+                progress=(datetime.datetime.now()-item.JBegin).days/(item.JFinal-item.JBegin).days
+                progress=0 if progress<0 else progress
+                available_job.append(
+                    {"JBegin": str(item.JBegin.date()), "JFinal": str(item.JFinal.date()), "Jname": item.Jname, "proj_name": proj.PName,
+                     "Jinformation": item.Jinformation, "Jddl": (item.Jddl-datetime.datetime.now()).days,
+                     "thin":color_map[i][0],"thick":color_map[i][1],"proj_port":proj.PPortrait.decode('ascii'),
+                     "progress_str":"%.2f%%" % (progress * 100)})
+        today = datetime.date.today()
+        time_str = str(today.year)+"年"+str(today.month)+"月"+str(today.day)+"日"
+        recruiting = Jobs.query.count()
 
-        
-    # 按照时间顺序排序，查询job
-
-    # 要传递的信息：当前时间；收到的offer；等待中的offer；
+        user_info = Candidate.query.filter(
+            Candidate.CAID == current_user.get_id()).first()
+        basic_info = BasicInfo.query.filter(
+            Candidate.id == user_info.id).first()
     # 各个工作：起止时间；工作名称；项目名称；工种；详细信息；投递截止日期。
     # 右上角个人信息：姓名/头像——要可以重定向到profile界面
-    # 带通过工作：图像；申请时间；详细信息
-
     # 要返回的信息：通过左栏重定向：边栏可以切换排序规则：按照时间排序；按照项目名称排序；按照工作名称排序
     # 搜索信息：按照关键字搜索。
-        return render_template("candidate/base.html",time=time_str,recruiting=recruiting)
+        portrait = basic_info.BPortrait.decode('ascii')
+        return render_template("candidate/base.html", time=time_str, recruiting=recruiting, img=portrait, name=basic_info.BName, applying_list=applying_list, available_job=available_job)
     else:
         return render_template("error/LogInFirst.html")
 
@@ -41,6 +68,7 @@ def home():
 @candidate_bp.route('/orderBYproject', methods=['GET', 'POST'])
 def home_1():
     return render_template("candidate/base1.html")
+
 
 @candidate_bp.route('/orderBYname', methods=['GET', 'POST'])
 def home_2():
