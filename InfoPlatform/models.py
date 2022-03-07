@@ -8,7 +8,7 @@ class Company(db.Model):
     CName = db.Column(db.String(1024), nullable=False)
     Corporate = db.Column(db.String(1024))
     Cphone = db.Column(db.String(11), unique=True, nullable=False)
-    CInofrmation = db.Column(db.Text)
+    CInformation = db.Column(db.Text)
     PID = db.relationship('Project')
     CMID = db.relationship('CompanyManager')
 
@@ -76,9 +76,7 @@ class Candidate(db.Model):
     moreInfo = db.Column(db.Text)
     id = db.Column(db.Integer, db.ForeignKey('basic_info.id'))
     basic_info = db.relationship('BasicInfo', back_populates='candidate')
-    applying = db.relationship(
-        'Applying', back_populates='candidate', uselist=False)
-
+    APID = db.relationship('Applying')
 
 
 class Jobs(db.Model):
@@ -117,7 +115,8 @@ class Applying(db.Model):
     JID = db.Column(db.Integer, db.ForeignKey('jobs.JID'))
     # 一对一关系
     CAID = db.Column(db.Integer, db.ForeignKey('candidate.CAID'))
-    candidate = db.relationship(
-        'Candidate', back_populates='applying')
-    
+    # candidate = db.relationship(
+    #     'Candidate', back_populates='applying')
+
     status = db.Column(db.Integer)
+    applytime = db.Column(db.DateTime)
