@@ -20,7 +20,7 @@ def login():
             if admin.Password == password:
                 login_user(admin)
                 if admin.UserType==0:
-                    return redirect(url_for('projectManager'))
+                    return redirect(url_for('candidate.home'))
                 elif admin.UserType==1:
                     return redirect(url_for('companyManager'))
                 return redirect_back()
@@ -67,7 +67,7 @@ def register():
         login_user(new_user)
         # js2py.eval_js("alert('注册成功')")
         # return redirect(url_for('/'))
-        return "bye"
+        return redirect(url_for('candidate.home'))
     else:
         print(form.email.errors,form.email.data) 
         print(form.fname.errors,form.fname.data) 

@@ -46,7 +46,7 @@ class CompanyManager(db.Model):
 class BasicInfo(db.Model, UserMixin):
     # id = db.Column(db.Integer, primary_key=True)
     id = db.Column(db.Integer, primary_key=True,
-                    nullable=False, autoincrement=True)
+                   nullable=False, autoincrement=True)
     BName = db.Column(db.String(1024), nullable=False)
     BPortrait = db.Column(db.LargeBinary(length=4096))
     Bphone = db.Column(db.String(11), unique=True, nullable=False)
@@ -76,6 +76,9 @@ class Candidate(db.Model):
     moreInfo = db.Column(db.Text)
     id = db.Column(db.Integer, db.ForeignKey('basic_info.id'))
     basic_info = db.relationship('BasicInfo', back_populates='candidate')
+    applying = db.relationship(
+        'Applying', back_populates='candidate', uselist=False)
+
 
 
 class Jobs(db.Model):
@@ -86,7 +89,10 @@ class Jobs(db.Model):
     Jcategory = db.Column(db.String(1024))
     Jinformation = db.Column(db.Text, nullable=False)
     Jexperience = db.Column(db.Integer)
+    JBegin = db.Column(db.DateTime)
+    JFinal = db.Column(db.DateTime)
     PID = db.Column(db.Integer, db.ForeignKey('project.PID'))
+    APID = db.relationship('Applying')
 
 
 class Authority(db.Model):
@@ -102,3 +108,16 @@ class Authority(db.Model):
     CMID = db.Column(db.Integer, db.ForeignKey('company_manager.CMID'))
     company_manager = db.relationship(
         'CompanyManager', back_populates='authority')
+
+
+class Applying(db.Model):
+    APID = db.Column(db.Integer, primary_key=True,
+                     nullable=False, autoincrement=True)
+    # 多对一关系0
+    JID = db.Column(db.Integer, db.ForeignKey('jobs.JID'))
+    # 一对一关系
+    CAID = db.Column(db.Integer, db.ForeignKey('candidate.CAID'))
+    candidate = db.relationship(
+        'Candidate', back_populates='applying')
+    
+    status = db.Column(db.Integer)
