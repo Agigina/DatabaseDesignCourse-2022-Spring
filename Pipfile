@@ -12,6 +12,7 @@ flask-debugtoolbar = "*"
 flask-migrate = "*"
 email-validator = "*"
 python-dotenv = "*"
+flask-uploads = "*"
 
 [dev-packages]
 

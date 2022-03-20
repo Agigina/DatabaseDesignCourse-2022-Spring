@@ -5,9 +5,9 @@ from InfoPlatform.forms import ProfileForm
 from InfoPlatform.models import Candidate, BasicInfo, Company, Project, Jobs, Applying
 from InfoPlatform.utils import redirect_back
 import datetime
-
+from flask_uploads import UploadSet,IMAGES
 candidate_bp = Blueprint('candidate', __name__)
-
+photos = UploadSet('photos', IMAGES)
 color_map=[["#fee4cb","#ff942e"],["#e9e7fd","#4f3ff0"],["#dbf6fd","#096c86"],["#ffd3e2","#df3670"],
 ["#c8f7dc","#34c471"],["#d5deff","#4067f9"],["#F6EEE0","#E4B7A0"],["#FADCD9","#F79489"],["#ECE3F0","#D3BBDD"]
 ]
@@ -222,9 +222,15 @@ def home_2():
 
 @candidate_bp.route('/profile', methods=['GET', 'POST'])
 def profile():
-    form = ProfileForm()
-    if form.validate_on_submit():
-        print(form.data)
+    if current_user.is_authenticated:
+        form = ProfileForm()
+        if form.validate_on_submit():
+            print(form.data)
+            # current_user.get_id() candidate的id
+            portait= photos.save(form.portrait.data)
+            print(portait)
+        else:
+            print(form.errors)
+        return render_template("candidate/profile.html",form=form)
     else:
-        print(form.errors)
-    return render_template("candidate/profile.html",form=form)
+        return render_template("error/LogInFirst.html")

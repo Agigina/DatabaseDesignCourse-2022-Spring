@@ -12,6 +12,7 @@ from InfoPlatform.blueprints.anonymous import anonymous_bp
 from InfoPlatform.models import Company, Project, ProjectManager, CompanyManager, BasicInfo, Candidate, Jobs, Authority, Applying
 from InfoPlatform.settings import config
 
+from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_class
 
 basedir = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
@@ -22,12 +23,13 @@ def create_app(config_name=None):
 
     app = Flask('InfoPlatform')
     app.config.from_object(config[config_name])
-
-    # register_logging(app)
+    photos = UploadSet('photos', IMAGES)
+    configure_uploads(app, photos)
+    patch_request_class(app)    # register_logging(app)
     register_extensions(app)
     register_blueprints(app)
     register_commands(app)
-    # register_errors(app)
+    #  # register_errors(app)
     # register_shell_context(app)
     # register_template_context(app)
     # register_request_handlers(app)

@@ -1,9 +1,10 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SelectField, RadioField,SubmitField, TextAreaField, PasswordField, BooleanField, FloatField, IntegerField,FileField
-from flask_wtf.file import FileAllowed
-from wtforms.validators import DataRequired, Email, Length, Optional, URL, EqualTo, Regexp, InputRequired
-# from flask.ext.uploads import UploadSet, IMAGES
-# images = UploadSet('images', IMAGES)
+from wtforms import StringField, SelectField, RadioField,SubmitField, TextAreaField, PasswordField, BooleanField, FloatField, IntegerField
+from flask_wtf.file import FileAllowed,FileField
+from flask_uploads import UploadSet, IMAGES
+from wtforms.validators import DataRequired, Email, Length,EqualTo, Regexp, InputRequired
+
+photos = UploadSet('photos', IMAGES)
 class ProfileForm(FlaskForm):
     # change BasicInfo
     nickname = StringField('Nickname',
@@ -17,7 +18,7 @@ class ProfileForm(FlaskForm):
         render_kw={
             'placeholder': "姓名", 'class': 'form-control selectpicker'
         },
-        choices=[(1, '男'), (2, '女'), (3, '不愿透露')],
+        choices=[('1', '男'), (2, '女'), (3, '不愿透露')],
         default=3,
         coerce=int
     )
@@ -45,9 +46,9 @@ class ProfileForm(FlaskForm):
                                       "class": "form-control"},
                            validators=[
                                DataRequired(), Length(1, 64)])
-    portrait=FileField('portrait',validators=[FileAllowed(['jpg', 'png'],'Images only!')])
-    health=FileField('health',validators=[FileAllowed(['jpg', 'png'],'Images only!')])
-    certificate=FileField('certificate',validators=[FileAllowed(['jpg', 'png'],'Images only!')])
+    portrait=FileField('portrait',validators=[FileAllowed(photos,'Images only!')])
+    health=FileField('health',validators=[FileAllowed(photos,'Images only!')])
+    certificate=FileField('certificate',validators=[FileAllowed(photos,'Images only!')])
     inform = StringField('inform',
                            render_kw={'placeholder': "经历",
                                       "class": "form-control"},
