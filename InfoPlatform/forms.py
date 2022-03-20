@@ -1,19 +1,65 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField, PasswordField, BooleanField, FloatField, IntegerField
+from wtforms import StringField, SelectField, RadioField,SubmitField, TextAreaField, PasswordField, BooleanField, FloatField, IntegerField,FileField
+from flask_wtf.file import FileAllowed
 from wtforms.validators import DataRequired, Email, Length, Optional, URL, EqualTo, Regexp, InputRequired
-
-
+# from flask.ext.uploads import UploadSet, IMAGES
+# images = UploadSet('images', IMAGES)
 class ProfileForm(FlaskForm):
     # change BasicInfo
-    nickname = StringField('Nickname', validators=[
-                           DataRequired(), Length(1, 64)])
-    github = StringField('GitHub', validators=[
-                         Optional(), URL(), Length(0, 128)])
-    website = StringField('Website', validators=[
-                          Optional(), URL(), Length(0, 128)])
-    bio = TextAreaField('Bio', validators=[Optional(), Length(0, 120)])
+    nickname = StringField('Nickname',
+                           render_kw={'placeholder': "姓名",
+                                      "class": "form-control"},
+                           validators=[
+                               DataRequired(), Length(1, 64)])
+    gender = SelectField(
+        label='类别',
+        validators=[DataRequired('请选择标签')],
+        render_kw={
+            'placeholder': "姓名", 'class': 'form-control selectpicker'
+        },
+        choices=[(1, '男'), (2, '女'), (3, '不愿透露')],
+        default=3,
+        coerce=int
+    )
+    email = StringField('Email',
+                        render_kw={'placeholder': "电子邮箱（可选）",
+                                   "class": "form-control"},
+                        validators=[Email()])
+    phone = StringField('Phone',
+                        render_kw={'placeholder': "手机号码",
+                                   "class": "form-control"},
+                        validators=[InputRequired(), DataRequired(),
+                                    Regexp(
+                            r"^1(3\d|4[4-9]|5[0-35-9]|6[67]|7[013-8]|8[0-9]|9[0-9])\d{8}$",
+                            message="Incorrect phone number")])
+    IDCard = StringField('IDCard',
+                         render_kw={'placeholder': "身份证号",
+                                    "class": "form-control"},
+                         validators=[DataRequired(), Regexp(
+                             r'/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$')])
+    Address = StringField('Name',
+                          render_kw={'placeholder': "地址", "class": "form-control"})
 
+    cate = StringField('Category',
+                           render_kw={'placeholder': "工种",
+                                      "class": "form-control"},
+                           validators=[
+                               DataRequired(), Length(1, 64)])
+    portrait=FileField('portrait',validators=[FileAllowed(['jpg', 'png'],'Images only!')])
+    health=FileField('health',validators=[FileAllowed(['jpg', 'png'],'Images only!')])
+    certificate=FileField('certificate',validators=[FileAllowed(['jpg', 'png'],'Images only!')])
+    inform = StringField('inform',
+                           render_kw={'placeholder': "经历",
+                                      "class": "form-control"},
+                           validators=[
+                                Length(1, 64)])
+    experience = StringField('experience',
+                           render_kw={'placeholder': "备注",
+                                      "class": "form-control"},
+                           validators=[
+                                Length(1, 64)])
 
+    status = RadioField('status', choices = [('free','空闲'),('busy','忙')])
 class LoginForm(FlaskForm):
     phone = StringField('Phone',
                         render_kw={'placeholder': "手机号码"},
@@ -37,7 +83,8 @@ class RegisterForm(FlaskForm):
     Address = StringField('Name',
                           render_kw={'placeholder': "地址"})
     phone = StringField('Phone',
-                        render_kw={'placeholder': "手机号码","type":"text","required":"required"},
+                        render_kw={'placeholder': "手机号码",
+                                   "type": "text", "required": "required"},
                         validators=[InputRequired(), DataRequired(), Regexp(
                             r"^1(3\d|4[4-9]|5[0-35-9]|6[67]|7[013-8]|8[0-9]|9[0-9])\d{8}$", message="Incorrect phone number")])
     password = PasswordField('Password',
