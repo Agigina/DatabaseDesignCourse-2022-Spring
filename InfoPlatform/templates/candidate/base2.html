@@ -5,7 +5,7 @@
   <title>梦想工作站</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 <link rel="stylesheet" href="../static/css/candidate_base_style.css">
-
+<link rel="stylesheet" href="../../static/css/candidate_base_style.css">
 </head>
 <body>
 <!-- partial:index.partial.html -->
@@ -136,12 +136,12 @@
                 <span>{{item.JBegin}}~{{item.JFinal}}</span>
                 <div class="more-wrapper">
                     <!-- 这个button点击一下可以去更详情的信息。 -->
-                  <button class="project-btn-more">
+                  <a href="/candidate/job-info/{{item.JID}}"class="project-btn-more">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical">
                       <circle cx="12" cy="12" r="1" />
                       <circle cx="12" cy="5" r="1" />
                       <circle cx="12" cy="19" r="1" /></svg>
-                  </button>
+                  </a>
             </div>
           </div>
           <div class="project-box-content-header">
@@ -162,11 +162,11 @@
                 <!-- img这边就去掉。没有用。 -->
               <img src="data:;base64,{{item.proj_port}}" alt="participant">
               <!-- <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTB8fG1hbnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60" alt="participant"> -->
-              <button class="add-participant" style="color: {{item.thick}};">
+              <a href="/candidate/job-apply/{{item.JID}}" class="add-participant" style="color: {{item.thick}};">
                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
                   <path d="M12 5v14M5 12h14" />
                 </svg>
-              </button>
+              </a>
             </div>
             <div class="days-left" style="color: {{item.thick}};">
               剩余{{item.Jddl}}天
@@ -219,5 +219,7 @@
 
 <!-- partial -->
 <script src="../static/js/candidate_base_script.js"></script>
+<script src="../../static/js/candidate_base_script.js"></script>
+
 </body>
 </html>

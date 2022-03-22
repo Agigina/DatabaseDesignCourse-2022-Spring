@@ -44,7 +44,8 @@
     <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
   <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-{{form.portrait}}   
+  <form method="POST" enctype="multipart/form-data">{{ form.hidden_tag() }}
+{{form.portrait}}   </form>
 </div>
   </div>
 </div>
@@ -118,7 +119,18 @@
           <span class="input-group-addon"><i class="glyphicon glyphicon-globe"></i></span>
           {{form.experience}}     </div>
     </div>
-  </div>  <div class="form-group">
+  </div>  
+  <div class="form-group">
+    <label class="col-md-4 control-label">工作年限</label>  
+     <div class="col-md-4 inputGroupContainer">
+      <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-globe"></i></span>
+          {{form.experin}}     </div>
+    </div>
+  </div> 
+  
+  
+  <div class="form-group">
     <label class="col-md-4 control-label">其他信息</label>  
      <div class="col-md-4 inputGroupContainer">
       <div class="input-group">

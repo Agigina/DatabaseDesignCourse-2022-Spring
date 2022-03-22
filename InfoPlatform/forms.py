@@ -60,7 +60,8 @@ class ProfileForm(FlaskForm):
                            validators=[
                                 Length(1, 64)])
 
-    status = RadioField('status', choices = [('free','空闲'),('busy','忙')])
+    status = RadioField('status', choices = [(0,'空闲'),(1,'忙')])
+    experin=IntegerField('工作年限', validators=[DataRequired()])
 class LoginForm(FlaskForm):
     phone = StringField('Phone',
                         render_kw={'placeholder': "手机号码"},

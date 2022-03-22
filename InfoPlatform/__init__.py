@@ -8,6 +8,7 @@ from InfoPlatform.extensions import bootstrap, db, login_manager, csrf, ckeditor
 
 from InfoPlatform.blueprints.candidate import candidate_bp
 from InfoPlatform.blueprints.anonymous import anonymous_bp
+from InfoPlatform.blueprints.companyManager import cm_bp
 
 from InfoPlatform.models import Company, Project, ProjectManager, CompanyManager, BasicInfo, Candidate, Jobs, Authority, Applying
 from InfoPlatform.settings import config
@@ -67,6 +68,7 @@ def register_extensions(app):
 def register_blueprints(app):
     app.register_blueprint(anonymous_bp)
     app.register_blueprint(candidate_bp, url_prefix='/candidate')
+    app.register_blueprint(cm_bp, url_prefix='/companymanager')
     # app.register_blueprint(admin_bp, url_prefix='/admin')
     # app.register_blueprint(auth_bp, url_prefix='/auth')
 

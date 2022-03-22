@@ -50,21 +50,22 @@ def register():
             # return "redirect(url_for('/'))"
             return login()
 
-        password = form.password
-        if password != form.password2:
+        password = form.password.data
+        if password != form.password2.data:
             print(1)
             # js2py.eval_js("alert('两次密码不一致，请重新输入')")
             flash('两次密码不一致，请重新输入')
-            return redirect(url_for('/register'))
+            return redirect(url_for('anonymous.register'))
         name=form.fname.data+form.lname.data
         new_user = BasicInfo(BName=name, Bphone=phone,
-                      IDCard=form.IDCard.data, UserType=0, Password=form.password.data, Bemail=form.email.data)
+                      IDCard=form.IDCard.data, UserType=1, Password=form.password.data, Bemail=form.email.data)
         db.session.add(new_user)
         new_candidate=Candidate()
         new_candidate.basic_info=new_user
         db.session.add(new_candidate)
         db.session.commit()
         login_user(new_user)
+        print("donedonedone")
         # js2py.eval_js("alert('注册成功')")
         # return redirect(url_for('/'))
         return redirect(url_for('candidate.home'))
@@ -77,4 +78,4 @@ def register():
         print(form.password.errors,form.password.data) 
         print(form.password2.errors,form.password2.data) 
         print(form.Address.errors,form.Address.data) 
-    return render_template("anonymous/register_form1.html", form=form)
+    return render_template("anonymous/register_form.html", form=form)

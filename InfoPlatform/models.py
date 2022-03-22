@@ -13,6 +13,7 @@ class Company(db.Model):
     CMID = db.relationship('CompanyManager')
     CPortrait = db.Column(db.LargeBinary(length=4096))
 
+
 class Project(db.Model):
     PID = db.Column(db.Integer, primary_key=True,
                     nullable=False, autoincrement=True)
@@ -56,7 +57,7 @@ class BasicInfo(db.Model, UserMixin):
     Password = db.Column(db.String(18), nullable=False)
     Bemail = db.Column(db.String(1024), nullable=False)
     BAddress = db.Column(db.Text)
-
+    Bgender = db.Column(db.String(30))
     project_manager = db.relationship(
         'ProjectManager', back_populates='basic_info', uselist=False)
     company_manager = db.relationship(
@@ -90,7 +91,7 @@ class Jobs(db.Model):
     Jexperience = db.Column(db.Integer)
     JBegin = db.Column(db.DateTime)
     JFinal = db.Column(db.DateTime)
-    Jddl=db.Column(db.DateTime)
+    Jddl = db.Column(db.DateTime)
     PID = db.Column(db.Integer, db.ForeignKey('project.PID'))
     APID = db.relationship('Applying')
 
