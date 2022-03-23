@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, url_for, Blueprint, request
+from flask import render_template, flash, redirect, url_for, Blueprint, request, session
 from flask_login import login_user, logout_user, login_required, current_user
 
 from InfoPlatform.forms import LoginForm, RegisterForm
@@ -22,7 +22,8 @@ def login():
                 if admin.UserType==1:
                     return redirect(url_for('candidate.home'))
                 elif admin.UserType==0:
-                    return redirect(url_for('companyManager'))
+                    session['info_id']=admin.id
+                    return redirect(url_for('companymanager.home'))
                 return redirect_back()
             flash('账号或密码不正确', 'warning')
         else:

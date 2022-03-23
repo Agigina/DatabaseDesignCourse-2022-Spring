@@ -5,6 +5,7 @@ from flask import Flask, render_template, request
 from flask_login import current_user
 from flask_wtf.csrf import CSRFError
 from InfoPlatform.extensions import bootstrap, db, login_manager, csrf, ckeditor, toolbar, migrate
+import datetime
 
 from InfoPlatform.blueprints.candidate import candidate_bp
 from InfoPlatform.blueprints.anonymous import anonymous_bp
@@ -115,14 +116,17 @@ def register_commands(app):
         cportrait1 = open("InfoPlatform/static/image/cportrait1.jpg", 'rb')
         cportrait1 = base64.b64encode(cportrait1.read())
 
-        project1 = Project(PName="上海市十号线修筑工程", PAddress="上海市杨浦区国帆路",PPortrait=pportrait1)
-        project2 = Project(PName="苏州体育馆承建", PAddress="苏州市",PPortrait=pportrait2)
+        project1 = Project(PName="上海市十号线修筑工程", PAddress="上海市杨浦区国帆路",PPortrait=pportrait1,
+                           Pbegin=datetime.datetime.strptime("2022-1-9 00:01:01", '%Y-%m-%d %H:%M:%S'),
+                           PEnd=datetime.datetime.strptime("2022-11-10 00:01:01", '%Y-%m-%d %H:%M:%S'))
+        project2 = Project(PName="苏州体育馆承建", PAddress="苏州市",PPortrait=pportrait2,
+                           Pbegin=datetime.datetime.strptime("2022-3-9 00:01:01", '%Y-%m-%d %H:%M:%S'),
+                           PEnd=datetime.datetime.strptime("2022-11-10 00:01:01", '%Y-%m-%d %H:%M:%S'))
         com = Company(CName="上海七维建筑工程有限公司", Corporate="某法人",CPortrait=cportrait1,
                       Cphone="15266332255", CInformation="嘟嘟嘟噜噜噜玛卡巴卡玛卡巴卡")
 
         pm = ProjectManager(PMID=0)
         cm = CompanyManager(CMID=0)
-        import datetime
         job1 = Jobs(Jname="LNG接收站施工工程师（土建）", salary=13000, Jcategory="全职",
                     Jinformation="全职，不允许远程", Jexperience=0, Jddl=datetime.datetime.strptime("2022-5-1 00:01:01", '%Y-%m-%d %H:%M:%S'),
                     JBegin=datetime.datetime.strptime("2022-3-4 00:01:01", '%Y-%m-%d %H:%M:%S'), JFinal=datetime.datetime.strptime("2022-6-18 00:01:01", '%Y-%m-%d %H:%M:%S'))
