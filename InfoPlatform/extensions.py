@@ -1,4 +1,5 @@
 from flask_bootstrap import Bootstrap
+# from InfoPlatform.models import BasicInfo
 from flask_ckeditor import CKEditor
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
@@ -17,8 +18,8 @@ migrate = Migrate()
 
 @login_manager.user_loader
 def load_user(user_id):
-    from InfoPlatform.models import Candidate
-    user = Candidate.query.get(int(user_id))
+    from InfoPlatform.models import BasicInfo
+    user = BasicInfo.query.get(int(user_id))
     return user
 
 

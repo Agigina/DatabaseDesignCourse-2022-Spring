@@ -62,6 +62,45 @@ class ProfileForm(FlaskForm):
 
     status = RadioField('status', choices = [(0,'空闲'),(1,'忙')])
     experin=IntegerField('工作年限', validators=[DataRequired()])
+
+class cmProfileForm(FlaskForm):
+    # change BasicInfo
+    nickname = StringField('Nickname',
+                           render_kw={'placeholder': "姓名",
+                                      "class": "form-control"},
+                           validators=[
+                               DataRequired(), Length(1, 64)])
+    gender = SelectField(
+        label='类别',
+        validators=[DataRequired('请选择标签')],
+        render_kw={
+            'placeholder': "姓名", 'class': 'form-control selectpicker'
+        },
+        choices=[('1', '男'), (2, '女'), (3, '不愿透露')],
+        default=3,
+        coerce=int
+    )
+    portrait=FileField('portrait',validators=[FileAllowed(photos,'Images only!')])
+
+    email = StringField('Email',
+                        render_kw={'placeholder': "电子邮箱（可选）",
+                                   "class": "form-control"},
+                        validators=[Email()])
+    phone = StringField('Phone',
+                        render_kw={'placeholder': "手机号码",
+                                   "class": "form-control"},
+                        validators=[InputRequired(), DataRequired(),
+                                    Regexp(
+                            r"^1(3\d|4[4-9]|5[0-35-9]|6[67]|7[013-8]|8[0-9]|9[0-9])\d{8}$",
+                            message="Incorrect phone number")])
+    IDCard = StringField('IDCard',
+                         render_kw={'placeholder': "身份证号",
+                                    "class": "form-control"},
+                         validators=[DataRequired(), Regexp(
+                             r'/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$')])
+    Address = StringField('Name',
+                          render_kw={'placeholder': "地址", "class": "form-control"})
+
 class LoginForm(FlaskForm):
     phone = StringField('Phone',
                         render_kw={'placeholder': "手机号码"},

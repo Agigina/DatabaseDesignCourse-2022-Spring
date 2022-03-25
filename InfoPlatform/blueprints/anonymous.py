@@ -17,19 +17,24 @@ def login():
         admin = BasicInfo.query.filter(BasicInfo.Bphone == phone).first()
         if admin:
             print(admin)
+            print(admin.Password,password)
             if admin.Password == password:
                 login_user(admin)
                 if admin.UserType==1:
                     return redirect(url_for('candidate.home'))
                 elif admin.UserType==0:
-                    session['info_id']=admin.id
+                    # session['info_id']=admin.id
                     return redirect(url_for('companymanager.home'))
+                elif admin.UserType==2:
+                    return redirect(url_for('projectmanager.home'))
                 return redirect_back()
             flash('账号或密码不正确', 'warning')
         else:
             print("no")
             flash('账户不存在，请注册。', 'warning')
     else:
+        print(form.phone.errors,form.phone.data) 
+        print(form.password.errors,form.password.data) 
         print("invalid")
     return render_template("anonymous/login_form.html", form=form)
 

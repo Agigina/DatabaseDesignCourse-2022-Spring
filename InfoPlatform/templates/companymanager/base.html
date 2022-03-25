@@ -16,34 +16,21 @@
   <div class="app-header">
     <div class="app-header-left">
       <span class="app-icon"></span>
-      <p class="app-name">梦想工作站</p>
-      <div class="search-wrapper">
-        <form class="form" method="post" id="input">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-        <input class="search-input" type="text" placeholder="搜索" name="search_name">
-        <button type="submit" class="try" formmethod="post">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="feather feather-search" viewBox="0 0 24 24">
-                <defs></defs>
-                <circle cx="11" cy="11" r="8"></circle>
-                <path d="M21 21l-4.35-4.35"></path>
-              </svg>
-        </button>
-    </form>
+      <p class="app-name">{{cmname}}</p>
 
-      </div>
     </div>
     <div class="app-header-right">
-      <button class="mode-switch" title="Switch Theme">
+      <!-- <button class="mode-switch" title="Switch Theme">
         <svg class="moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="24" height="24" viewBox="0 0 24 24">
           <defs></defs>
           <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
         </svg>
-      </button>
-      <button class="add-btn" title="Add New Project">
+      </button> -->
+      <a href="/companymanager/add-project" class="add-btn" title="Add New Project">
         <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
           <line x1="12" y1="5" x2="12" y2="19" />
           <line x1="5" y1="12" x2="19" y2="12" /></svg>
-      </button>
+      </a>
       <!-- <button class="notification-btn">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell">
           <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
@@ -53,7 +40,7 @@
       <img src="data:;base64,{{ img}}" />
       <span>{{name}}</span>
     </button> -->
-    <a href="/candidate/profile" class="profile-btn">
+    <a href="/companymanager/profile" class="profile-btn">
       <img src="data:;base64,{{ img}}" />
       <span>{{name}}</span>
     </a>
@@ -64,53 +51,27 @@
     </button>
   </div>
   <div class="app-content">
-    <div class="app-sidebar">
-      <a href="/candidate/home" class="app-sidebar-link active">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home">
-          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-          <polyline points="9 22 9 12 15 12 15 22" /></svg>
-      </a>
-      <a href="/candidate/orderBYproject" class="app-sidebar-link">
-        <svg class="link-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="feather feather-pie-chart" viewBox="0 0 24 24">
-          <defs />
-          <path d="M21.21 15.89A10 10 0 118 2.83M22 12A10 10 0 0012 2v10z" />
-        </svg>
-      </a>
-      <a href="/candidate/orderBYname" class="app-sidebar-link">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
-          <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-          <line x1="16" y1="2" x2="16" y2="6" />
-          <line x1="8" y1="2" x2="8" y2="6" />
-          <line x1="3" y1="10" x2="21" y2="10" /></svg>
-      </a>
-      <!-- <a href="" class="app-sidebar-link">
-        <svg class="link-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="feather feather-settings" viewBox="0 0 24 24">
-          <defs />
-          <circle cx="12" cy="12" r="3" />
-          <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z" />
-        </svg>
-      </a> -->
-    </div>
+
     <div class="projects-section">
       <div class="projects-section-header">
-        <p>招聘信息</p>
+        <p>项目信息</p>
         <!-- 这里需要替换成当天的时间。 -->
         <p class="time">{{time}}</p>
       </div>
       <div class="projects-section-line">
         <div class="projects-status">
           <div class="item-status">
-            <span class="status-number">{{recruiting}}</span>
-            <span class="status-type">岗位未招满</span>
+            <span class="status-number">{{nowa}}</span>
+            <span class="status-type">已开工项目</span>
           </div>
           <div class="item-status">
-            <span class="status-number">{{waiting_num}}</span>
-            <span class="status-type">等待回复</span>
+            <span class="status-number">{{future}}</span>
+            <span class="status-type">未开工项目</span>
           </div> 
-          <div class="item-status">
+          <!-- <div class="item-status">
             <span class="status-number">{{offer_num}}</span>
             <span class="status-type">收到聘书</span>
-          </div>
+          </div> -->
         </div>
         <div class="view-actions">
           <button class="view-btn list-view" title="List View">
@@ -132,15 +93,15 @@
         </div>
       </div>
       <div class="project-boxes jsGridView">
-          {% for item in available_job %}
+          {% for item in projects %}
           <div class="project-box-wrapper">
             <div class="project-box" style="background-color: {{item.thin}};">
               <div class="project-box-header">
                   <!-- 这个时间需要替换成工程持续的时间。 -->
-                <span>{{item.JBegin}}~{{item.JFinal}}</span>
+                <span>{{item.begin}}~{{item.end}}</span>
                 <div class="more-wrapper">
                     <!-- 这个button点击一下可以去更详情的信息。 -->
-                  <a href="/candidate/job-info/{{item.JID}}" class="project-btn-more">
+                  <a href="/companymanager/project-profile/{{item.PID}}" class="project-btn-more">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical">
                       <circle cx="12" cy="12" r="1" />
                       <circle cx="12" cy="5" r="1" />
@@ -150,8 +111,8 @@
           </div>
           <div class="project-box-content-header">
               <!-- 这里替换成项目名称和项目内容 -->
-            <p class="box-content-header">{{item.Jname}}</p>
-            <p class="box-content-subheader">{{item.proj_name}}</p>
+            <p class="box-content-header">{{item.name}}</p>
+            <!-- <p class="box-content-subheader">{{item.proj_name}}</p> -->
           </div>
           <div class="box-progress-wrapper">
               <!-- 这里就写一下详情信息比较好 -->
@@ -166,7 +127,7 @@
                 <!-- img这边就去掉。没有用。 -->
               <img src="data:;base64,{{item.proj_port}}" alt="participant">
               <!-- <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTB8fG1hbnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60" alt="participant"> -->
-              <a href="/candidate/job-apply/{{item.JID}}" class="add-participant" style="color: {{item.thick}};">
+              <a href="/candidate/job-apply/{{item.PID}}" class="add-participant" style="color: {{item.thick}};">
                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
                   <path d="M12 5v14M5 12h14" />
                 </svg>

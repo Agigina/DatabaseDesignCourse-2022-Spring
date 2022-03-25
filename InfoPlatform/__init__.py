@@ -103,7 +103,7 @@ def register_commands(app):
         bi1 = BasicInfo(BName="赵艺博", Bphone="18335320958",BPortrait=portrait1,
                         IDCard="140302200108031228", UserType=1, Password="12", Bemail="zybzyb_email@163.com")
         bi2 = BasicInfo(BName="邹玉洁", Bphone="15235327868",BPortrait=portrait2,
-                        IDCard="140302200108031227", UserType=0, Password="123", Bemail="139@qq.com")
+                        IDCard="140302200108031227", UserType=2, Password="123", Bemail="139@qq.com")
         bi3 = BasicInfo(BName="谢佳依", Bphone="15235327867",BPortrait=portrait3,
                         IDCard="140302200108031226", UserType=0, Password="1234", Bemail="163@gmail.com")
         bi4 = BasicInfo(BName="刘珺益", Bphone="15235327866",BPortrait=portrait4,
