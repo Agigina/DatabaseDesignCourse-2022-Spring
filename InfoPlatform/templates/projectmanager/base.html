@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>梦想工作站</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+  <link rel="stylesheet" href="../static/css/candidate_base_style.css">
+  <link rel="stylesheet" href="../../static/css/candidate_base_style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+
+    <!-- <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/> -->
+<div class="app-container">
+  <div class="app-header">
+    <div class="app-header-left">
+      <span class="app-icon"></span>
+      <p class="app-name">{{projectname}}</p>
+    </div>
+    <div class="app-header-right">
+      <button class="mode-switch" title="Switch Theme">
+        <!-- <svg class="moon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="24" height="24" viewBox="0 0 24 24">
+          <defs></defs>
+          <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+        </svg>
+      </button> -->
+      <a href="/projectmanager/add-project" class="add-btn" title="Add New Project">
+        <svg class="btn-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+          <line x1="12" y1="5" x2="12" y2="19" />
+          <line x1="5" y1="12" x2="19" y2="12" /></svg>
+      </a>
+    <a href="/projectmanager/profile" class="profile-btn">
+      <img src="data:;base64,{{ img}}" />
+      <span>{{name}}</span>
+    </a>
+</div>
+    <button class="messages-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-circle">
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" /></svg>
+    </button>
+  </div>
+  <div class="app-content">
+
+    <div class="projects-section">
+      <div class="projects-section-header">
+        <p>已发布工作</p>
+        <!-- 这里需要替换成当天的时间。 -->
+        <p class="time">{{time}}</p>
+      </div>
+      <div class="projects-section-line">
+        <div class="projects-status">
+          <div class="item-status">
+            <span class="status-number">{{nowa}}</span>
+            <span class="status-type">进行中工作</span>
+          </div>
+          <div class="item-status">
+            <span class="status-number">{{future}}</span>
+            <span class="status-type">未开工工作</span>
+          </div> 
+        </div>
+        <div class="view-actions">
+          <button class="view-btn list-view" title="List View">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list">
+              <line x1="8" y1="6" x2="21" y2="6" />
+              <line x1="8" y1="12" x2="21" y2="12" />
+              <line x1="8" y1="18" x2="21" y2="18" />
+              <line x1="3" y1="6" x2="3.01" y2="6" />
+              <line x1="3" y1="12" x2="3.01" y2="12" />
+              <line x1="3" y1="18" x2="3.01" y2="18" /></svg>
+          </button>
+          <button class="view-btn grid-view active" title="Grid View">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid">
+              <rect x="3" y="3" width="7" height="7" />
+              <rect x="14" y="3" width="7" height="7" />
+              <rect x="14" y="14" width="7" height="7" />
+              <rect x="3" y="14" width="7" height="7" /></svg>
+          </button>
+        </div>
+      </div>
+      <div class="project-boxes jsGridView">
+          {% for item in available_job %}
+          <div class="project-box-wrapper">
+            <div class="project-box" style="background-color: {{item.thin}};">
+              <div class="project-box-header">
+                  <!-- 这个时间需要替换成工程持续的时间。 -->
+                <span>{{item.JBegin}}~{{item.JFinal}}</span>
+                <div class="more-wrapper">
+                    <!-- 这个button点击一下可以去更详情的信息。 -->
+                  <a href="/projectmanager/job-profile/{{item.JID}}" class="project-btn-more">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical">
+                      <circle cx="12" cy="12" r="1" />
+                      <circle cx="12" cy="5" r="1" />
+                      <circle cx="12" cy="19" r="1" /></svg>
+                  </a>
+            </div>
+          </div>
+          <div class="project-box-content-header">
+              <!-- 这里替换成项目名称和项目内容 -->
+            <p class="box-content-header">{{item.Jname}}</p>
+            <!-- <p class="box-content-subheader">{{item.proj_name}}</p> -->
+          </div>
+          <div class="box-progress-wrapper">
+              <!-- 这里就写一下详情信息比较好 -->
+            <p class="box-progress-header">项目进度</p>
+            <div class="box-progress-bar">
+              <span class="box-progress" style="width: {{item.progress_str}}; background-color: {{item.thick}}"></span>
+            </div>
+            <p class="box-progress-percentage">{{item.progress_str}}</p>
+          </div>
+          <div class="project-box-footer">
+            <div class="participants">
+                <!-- img这边就去掉。没有用。 -->
+              <!-- <img src="data:;base64,{{item.proj_port}}" alt="participant"> -->
+              <!-- <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?ixid=MXwxMjA3fDB8MHxzZWFyY2h8MTB8fG1hbnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60" alt="participant"> -->
+              <a href="/projectmanager/delete-job/{{item.JID}}" class="add-participant" style="color: {{item.thick}};">
+                <svg t="1648263772785" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="8407" width="200" height="200"><path d="M658.276045 767.993958 658.276045 274.295l329.126 0L987.402045 219.44 658.276 219.44l0-18.281c0-80.787046-65.492992-146.284032-146.276045-146.284032-80.790016 0-146.276045 65.496986-146.276045 146.284032l0 18.281L36.597 219.44l0 54.855 109.695 0 0 694.83L877.7 969.125l0-548.55-54.855 0L822.845 914.27l-621.69 0L201.155 274.295l164.569 0 0 493.699 54.848 0L420.572 274.295l182.85 0 0 493.699L658.276 767.994zM420.571034 219.440026l0-18.281c0-50.492006 40.932966-91.420979 91.428966-91.420979 50.489037 0 91.420979 40.928973 91.420979 91.420979l0 18.281L420.571 219.440026z" p-id="8408"></path></svg>
+              </a>
+            </div>
+            <div class="days-left" style="color: {{item.thick}};">
+              剩余{{item.Jddl}}天
+            </div>
+          </div>
+        </div>
+      </div>
+            {% endfor %}
+  </div>
+</div>
+<!-- 这边就是waiting list吧，就是已经投递的信息会在这里显示。 -->
+<div class="messages-section">
+  <button class="messages-close">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle">
+      <circle cx="12" cy="12" r="10" />
+      <line x1="15" y1="9" x2="9" y2="15" />
+      <line x1="9" y1="9" x2="15" y2="15" /></svg>
+  </button>
+  <div class="projects-section-header">
+    <p>申请列表</p>
+  </div>
+  <div class="messages">
+
+    {% for item in applying_list %}
+    <div class="message-box">
+        <img src="data:;base64,{{item.PPortrait}}" alt="profile image">
+        <div class="message-content">
+          <div class="message-header">
+            <div class="name">{{item.job_name}}</div>
+            <!-- 一个是拒绝，一个是同意。 -->
+            <div class="star-checkbox">
+                <a href="/projectmanager/offer/{{item.APID}}">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-star">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+                </a>
+                <a href="/projectmanager/refuse/{{item.APID}}">
+                    <svg t="1648399135781" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3122" width="20" height="20"><path d="M828.8 195.2c-174.9-174.9-458.6-174.9-633.6 0-174.9 174.9-174.9 458.6 0 633.6 174.9 174.9 458.6 174.9 633.6 0 174.9-175 174.9-458.7 0-633.6zM664.1 886.4c-48.4 19.7-99.6 29.6-152 29.6s-103.7-9.9-152-29.6c-50.1-20.3-95.1-50.1-133.7-88.7-38.6-38.6-68.4-83.6-88.7-133.6-19.7-48.4-29.6-99.6-29.6-152s9.9-103.7 29.6-152C158 310 187.8 265 226.4 226.4S310 158 360 137.7c48.4-19.7 99.6-29.6 152-29.6 52.5 0 103.7 9.9 152 29.6 50.1 20.3 95.1 50.1 133.7 88.7C836.3 265 866.1 310 886.4 360c19.7 48.4 29.6 99.6 29.6 152s-9.9 103.7-29.6 152c-20.3 50.1-50.1 95.1-88.7 133.7-38.6 38.6-83.6 68.4-133.6 88.7z" p-id="3123" fill="#13227a"></path><path d="M710 679.6L344.4 314c-8.4-8.4-22-8.4-30.4 0-8.4 8.4-8.4 22 0 30.4L679.6 710c8.4 8.4 22 8.4 30.4 0 8.4-8.4 8.4-22 0-30.4z" p-id="3124" fill="#13227a"></path><path d="M679.6 314L314 679.6c-8.4 8.4-8.4 22 0 30.4s22 8.4 30.4 0L710 344.4c8.4-8.4 8.4-22 0-30.4-8.4-8.4-22-8.4-30.4 0z" p-id="3125" fill="#13227a"></path></svg>                </a>
+              </div>
+          </div>
+          <!-- <p class="message-line">
+            申请日期：{{item.proj_name}}
+          </p> -->
+          <p class="message-line">
+            申请人：{{item.cname}}
+          </p>
+          <p class="message-line">
+            联系方式：{{item.phone}}
+          </p>
+          <p class="message-line time">
+            {{item.applytime}}
+          </p>
+        </div>
+      </div>
+      {% endfor %}
+      </div>
+</div>
+</div>
+</div>
+
+<!-- partial -->
+<script src="../static/js/candidate_base_script.js"></script>
+<script src="../../static/js/candidate_base_script.js"></script>
+</body>
+</html>
