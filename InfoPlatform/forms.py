@@ -116,7 +116,7 @@ class projectProfileForm(FlaskForm):
                            validators=[
                                DataRequired(), Length(1, 64)])
     portrait = FileField('portrait', validators=[DataRequired(),
-                         FileAllowed(photos, 'Images only!')])
+                                                 FileAllowed(photos, 'Images only!')])
     begin = DateTimeField('begintime',
                           render_kw={'placeholder': "项目开始时间",
                                      "class": "form-control"})
@@ -127,24 +127,80 @@ class projectProfileForm(FlaskForm):
                          render_kw={'placeholder': "负责人编号",
                                     "class": "form-control"})
     pmid2 = IntegerField('pmid2', validators=[DataRequired(), EqualTo('pmid1')],
-                          render_kw={'placeholder': "重新输入负责人编号",
-                                     "class": "form-control"})
+                         render_kw={'placeholder': "重新输入负责人编号",
+                                    "class": "form-control"})
     Address = StringField('Name',
                           render_kw={'placeholder': "地址", "class": "form-control"})
 
+
 class pmProfileForm(FlaskForm):
-    a=0
-    
+    nickname = StringField('Nickname',
+                           render_kw={'placeholder': "姓名",
+                                      "class": "form-control"},
+                           validators=[
+                               DataRequired(), Length(1, 64)])
+    gender = SelectField(
+        label='类别',
+        validators=[DataRequired('请选择标签')],
+        render_kw={
+            'placeholder': "姓名", 'class': 'form-control selectpicker'
+        },
+        choices=[('1', '男'), (2, '女'), (3, '不愿透露')],
+        default=3,
+        coerce=int
+    )
+    portrait = FileField('portrait', validators=[
+                         FileAllowed(photos, 'Images only!')])
+
+    email = StringField('Email',
+                        render_kw={'placeholder': "电子邮箱（可选）",
+                                   "class": "form-control"},
+                        validators=[Email()])
+    phone = StringField('Phone',
+                        render_kw={'placeholder': "手机号码",
+                                   "class": "form-control"},
+                        validators=[InputRequired(), DataRequired(),
+                                    Regexp(
+                            r"^1(3\d|4[4-9]|5[0-35-9]|6[67]|7[013-8]|8[0-9]|9[0-9])\d{8}$",
+                            message="Incorrect phone number")])
+    IDCard = StringField('IDCard',
+                         render_kw={'placeholder': "身份证号",
+                                    "class": "form-control"},
+                         validators=[DataRequired(), Regexp(
+                             r'/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$')])
+    Address = StringField('Name',
+                          render_kw={'placeholder': "地址", "class": "form-control"})
+
+
 class JobForm(FlaskForm):
     # for job establish and job edition
-    JName = StringField('Name', validators=[DataRequired(), Length(1, 1024)])
-    salary = FloatField('Salary')
-    Jcategory = StringField('Job category', validators=[
-                            DataRequired(), Length(1, 2048)])
-    Jinformation = TextAreaField('Detailed Information', validators=[
-                                 DataRequired(), Length(0, 120)])
-    Jexperience = IntegerField('least work year', validators=[DataRequired()])
-    submit = SubmitField('Submit')
+    JName = StringField('Name',
+                        render_kw={'placeholder': "项目名称",
+                                   "class": "form-control"}, validators=[DataRequired(), Length(1, 1024)])
+    salary = FloatField('Salary',
+                        render_kw={'placeholder': "工资水平",
+                                   "class": "form-control"})
+    Jcategory = StringField('Job category',
+                            render_kw={'placeholder': "所需工种",
+                                       "class": "form-control"}, validators=[
+                                DataRequired(), Length(1, 2048)])
+    Jinformation = TextAreaField('Detailed Information',
+                                 render_kw={'placeholder': "详情信息",
+                                            "class": "form-control"}, validators=[
+                                     DataRequired(), Length(0, 120)])
+    Jexperience = IntegerField('least work year',
+                               render_kw={'placeholder': "所需工作年限",
+                                          "class": "form-control"}, validators=[DataRequired()])
+    JBegin = DateTimeField('begintime',
+                           render_kw={'placeholder': "工作开始时间",
+                                      "class": "form-control"})
+    JFinal = DateTimeField('endtime',
+                           render_kw={'placeholder': "工作结束时间",
+                                      "class": "form-control"})
+    Jddl = DateTimeField('ddl',
+                         render_kw={'placeholder': "工作截止申报时间",
+                                    "class": "form-control"})
+
 
 class companyProfileForm(FlaskForm):
     nickname = StringField('Nickname',
@@ -167,9 +223,9 @@ class companyProfileForm(FlaskForm):
                          validators=[
                              Length(1, 64)])
     corporate = StringField('Nickname',
-                           render_kw={'placeholder': "法人姓名",
-                                      "class": "form-control"},
-                           validators=[Length(1, 64)])
+                            render_kw={'placeholder': "法人姓名",
+                                       "class": "form-control"},
+                            validators=[Length(1, 64)])
 
 
 class LoginForm(FlaskForm):

@@ -100,13 +100,13 @@ def register_commands(app):
         portrait4 = open("InfoPlatform/static/image/portrait4.jpg", 'rb')
         portrait4 = base64.b64encode(portrait4.read())
 
-        bi1 = BasicInfo(BName="赵艺博", Bphone="18335320958",BPortrait=portrait1,
+        bi1 = BasicInfo(BName="赵艺博", Bphone="18335320958", BPortrait=portrait1,
                         IDCard="140302200108031228", UserType=1, Password="12", Bemail="zybzyb_email@163.com")
-        bi2 = BasicInfo(BName="邹玉洁", Bphone="15235327868",BPortrait=portrait2,
+        bi2 = BasicInfo(BName="邹玉洁", Bphone="15235327868", BPortrait=portrait2,
                         IDCard="140302200108031227", UserType=2, Password="123", Bemail="139@qq.com")
-        bi3 = BasicInfo(BName="谢佳依", Bphone="15235327867",BPortrait=portrait3,
+        bi3 = BasicInfo(BName="谢佳依", Bphone="15235327867", BPortrait=portrait3,
                         IDCard="140302200108031226", UserType=0, Password="1234", Bemail="163@gmail.com")
-        bi4 = BasicInfo(BName="刘珺益", Bphone="15235327866",BPortrait=portrait4,
+        bi4 = BasicInfo(BName="刘珺益", Bphone="15235327866", BPortrait=portrait4,
                         IDCard="140302200108031225", UserType=1, Password="12345", Bemail="123@126.com")
 
         pportrait1 = open("InfoPlatform/static/image/pportrait1.jpg", 'rb')
@@ -116,13 +116,15 @@ def register_commands(app):
         cportrait1 = open("InfoPlatform/static/image/cportrait1.jpg", 'rb')
         cportrait1 = base64.b64encode(cportrait1.read())
 
-        project1 = Project(PName="上海市十号线修筑工程", PAddress="上海市杨浦区国帆路",PPortrait=pportrait1,
-                           Pbegin=datetime.datetime.strptime("2022-1-9 00:01:01", '%Y-%m-%d %H:%M:%S'),
+        project1 = Project(PName="上海市十号线修筑工程", PAddress="上海市杨浦区国帆路", PPortrait=pportrait1,
+                           Pbegin=datetime.datetime.strptime(
+                               "2022-1-9 00:01:01", '%Y-%m-%d %H:%M:%S'),
                            PEnd=datetime.datetime.strptime("2022-11-10 00:01:01", '%Y-%m-%d %H:%M:%S'))
-        project2 = Project(PName="苏州体育馆承建", PAddress="苏州市",PPortrait=pportrait2,
-                           Pbegin=datetime.datetime.strptime("2022-3-9 00:01:01", '%Y-%m-%d %H:%M:%S'),
+        project2 = Project(PName="苏州体育馆承建", PAddress="苏州市", PPortrait=pportrait2,
+                           Pbegin=datetime.datetime.strptime(
+                               "2022-3-9 00:01:01", '%Y-%m-%d %H:%M:%S'),
                            PEnd=datetime.datetime.strptime("2022-11-10 00:01:01", '%Y-%m-%d %H:%M:%S'))
-        com = Company(CName="上海七维建筑工程有限公司", Corporate="某法人",CPortrait=cportrait1,
+        com = Company(CName="上海七维建筑工程有限公司", Corporate="某法人", CPortrait=cportrait1,
                       Cphone="15266332255", CInformation="嘟嘟嘟噜噜噜玛卡巴卡玛卡巴卡")
 
         pm = ProjectManager(PMID=0)
@@ -131,13 +133,13 @@ def register_commands(app):
                     Jinformation="全职，不允许远程", Jexperience=0, Jddl=datetime.datetime.strptime("2022-5-1 00:01:01", '%Y-%m-%d %H:%M:%S'),
                     JBegin=datetime.datetime.strptime("2022-3-4 00:01:01", '%Y-%m-%d %H:%M:%S'), JFinal=datetime.datetime.strptime("2022-6-18 00:01:01", '%Y-%m-%d %H:%M:%S'))
         job2 = Jobs(Jname="土建施工员G00961", salary=16000, Jcategory="全职",
-                    Jinformation="全职，不允许远程", Jexperience=0, Jddl=datetime.datetime.strptime("2022-6-1 00:01:01", '%Y-%m-%d %H:%M:%S'), 
+                    Jinformation="全职，不允许远程", Jexperience=0, Jddl=datetime.datetime.strptime("2022-6-1 00:01:01", '%Y-%m-%d %H:%M:%S'),
                     JBegin=datetime.datetime.strptime("2022-3-9 00:01:01", '%Y-%m-%d %H:%M:%S'), JFinal=datetime.datetime.strptime("2022-8-18 00:01:01", '%Y-%m-%d %H:%M:%S'))
         job3 = Jobs(Jname="土建施工图设计师", salary=21000, Jcategory="全职",
-                    Jinformation="全职，不允许远程", Jexperience=0, Jddl=datetime.datetime.strptime("2022-4-1 00:01:01", '%Y-%m-%d %H:%M:%S'), 
+                    Jinformation="全职，不允许远程", Jexperience=0, Jddl=datetime.datetime.strptime("2022-4-1 00:01:01", '%Y-%m-%d %H:%M:%S'),
                     JBegin=datetime.datetime.strptime("2022-1-9 00:01:01", '%Y-%m-%d %H:%M:%S'), JFinal=datetime.datetime.strptime("2022-4-21 00:01:01", '%Y-%m-%d %H:%M:%S'))
         job4 = Jobs(Jname="现场土建负责人", salary=7000, Jcategory="全职",
-                    Jinformation="全职，不允许远程", Jexperience=0, Jddl=datetime.datetime.strptime("2022-9-1 00:01:01", '%Y-%m-%d %H:%M:%S'), 
+                    Jinformation="全职，不允许远程", Jexperience=0, Jddl=datetime.datetime.strptime("2022-9-1 00:01:01", '%Y-%m-%d %H:%M:%S'),
                     JBegin=datetime.datetime.strptime("2022-5-1 00:01:01", '%Y-%m-%d %H:%M:%S'), JFinal=datetime.datetime.strptime("2022-9-28 00:01:01", '%Y-%m-%d %H:%M:%S'))
         job5 = Jobs(Jname="土建施工员", salary=8000, Jcategory="全职", Jinformation="全职，不允许远程", Jddl=datetime.datetime.strptime("2022-9-1 00:01:01", '%Y-%m-%d %H:%M:%S'),
                     Jexperience=0, JBegin=datetime.datetime.strptime("2022-3-14 00:01:01", '%Y-%m-%d %H:%M:%S'), JFinal=datetime.datetime.strptime("2022-9-14 00:01:01", '%Y-%m-%d %H:%M:%S'))
@@ -180,11 +182,11 @@ def register_commands(app):
         com.PID.append(project2)
 
         app1 = Applying(applytime=datetime.datetime.strptime(
-            "2022-2-15 00:01:01", '%Y-%m-%d %H:%M:%S'),status=int(0))
+            "2022-2-15 00:01:01", '%Y-%m-%d %H:%M:%S'), status=int(0))
         app2 = Applying(applytime=datetime.datetime.strptime(
-            "2022-2-12 00:01:01", '%Y-%m-%d %H:%M:%S'),status=int(1))
+            "2022-2-12 00:01:01", '%Y-%m-%d %H:%M:%S'), status=int(1))
         app3 = Applying(applytime=datetime.datetime.strptime(
-            "2022-2-16 00:01:01", '%Y-%m-%d %H:%M:%S'),status=int(2))
+            "2022-2-16 00:01:01", '%Y-%m-%d %H:%M:%S'), status=int(2))
 
         job1.APID.append(app1)
         job2.APID.append(app2)

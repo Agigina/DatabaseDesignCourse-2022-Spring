@@ -22,51 +22,79 @@
 
     
 <div class="form-group">
-  <label class="col-md-4 control-label">项目名称</label>  
+  <label class="col-md-4 control-label">工作名称</label>  
   <div class="col-md-4 inputGroupContainer">
   <div class="input-group">
   <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-  {{form.nickname}} </div>
+  {{form.JName}} </div>
   </div>
 </div>
   
   <div class="form-group">
-  <label class="col-md-4 control-label" >项目照片简介</label> 
+  <label class="col-md-4 control-label" >工资水平</label> 
     <div class="col-md-4 inputGroupContainer">
     <div class="input-group">
   <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-  <form method="POST" enctype="multipart/form-data">{{ form.hidden_tag() }}
-{{form.portrait}}   </form>
+  <!-- <form method="POST" enctype="multipart/form-data">{{ form.hidden_tag() }} -->
+{{form.salary}}   
+<!-- </form> -->
 </div>
   </div>
 </div>
 
 <div class="form-group">
-    <label class="col-md-4 control-label">项目开始时间</label>  
+    <label class="col-md-4 control-label">所需工种</label>  
       <div class="col-md-4 inputGroupContainer">
       <div class="input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-  {{form.begin}}    </div>
+  {{form.Jcategory}}    </div>
     </div>
   </div>
   <div class="form-group">
-    <label class="col-md-4 control-label">项目结束时间</label>  
+    <label class="col-md-4 control-label">详情信息</label>  
       <div class="col-md-4 inputGroupContainer">
       <div class="input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-          {{form.end}}     </div>
+          {{form.Jinformation}}     </div>
     </div>
   </div>
   
   <div class="form-group"> 
-    <label class="col-md-4 control-label">项目负责人编号</label>
+    <label class="col-md-4 control-label">所需工作年限</label>
       <div class="col-md-4 selectContainer">
       <div class="input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
-        {{form.pmid1}}
+        {{form.Jexperience}}
     </div>
   </div>
-  </div>  <div class="form-group"> 
+  </div>  
+  <div class="form-group">
+    <label class="col-md-4 control-label">工作开始时间</label>  
+      <div class="col-md-4 inputGroupContainer">
+      <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+  {{form.JBegin}}    </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-md-4 control-label">工作结束时间</label>  
+      <div class="col-md-4 inputGroupContainer">
+      <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+          {{form.JFinal}}     </div>
+    </div>
+  </div>
+  
+  <div class="form-group"> 
+    <label class="col-md-4 control-label">工作截止申报时间</label>
+      <div class="col-md-4 selectContainer">
+      <div class="input-group">
+          <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+        {{form.Jddl}}
+    </div>
+  </div>
+  </div>  
+  <!-- <div class="form-group"> 
     <label class="col-md-4 control-label">再次输入负责人编号</label>
       <div class="col-md-4 selectContainer">
       <div class="input-group">
@@ -84,7 +112,7 @@
         <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
 {{form.Address}}    </div>
   </div>
-</div>
+</div> -->
 
 
 

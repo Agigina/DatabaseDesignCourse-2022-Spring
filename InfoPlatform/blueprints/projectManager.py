@@ -6,6 +6,7 @@ from InfoPlatform.models import BasicInfo, Candidate, Company, CompanyManager, P
 import datetime
 from flask_uploads import UploadSet, IMAGES
 import datetime
+import os
 from InfoPlatform.extensions import db
 
 pm_bp = Blueprint('projectmanager', __name__)
@@ -50,12 +51,13 @@ def home():
                      "progress_str": "%.2f%%" % (progress * 100),"JID":item.JID})
             apply=Applying.query.filter(Applying.JID==item.JID).all()
             for ap in apply:
-                ca=Candidate.query.filter(Candidate.CAID==ap.CAID).first()
-                cainfo=BasicInfo.query.filter(ca.id==BasicInfo.id).first()
-                apply_time = "申请时间："+str(ap.applytime.date())
-                applyies.append({"applytime": apply_time, "proj_name": p.PName,"cname":cainfo.BName,"phone":cainfo.Bphone,
-                                    "job_name": item.Jname, "Info": "类型："+str(item.Jcategory)+"，信息："+str(item.Jinformation),
-                                    "PPortrait": p.PPortrait.decode('ascii'),"APID":ap.APID})
+                if ap.status==0:
+                    ca=Candidate.query.filter(Candidate.CAID==ap.CAID).first()
+                    cainfo=BasicInfo.query.filter(ca.id==BasicInfo.id).first()
+                    apply_time = "申请时间："+str(ap.applytime.date())
+                    applyies.append({"applytime": apply_time, "proj_name": p.PName,"cname":cainfo.BName,"phone":cainfo.Bphone,
+                                        "job_name": item.Jname, "Info": "类型："+str(item.Jcategory)+"，信息："+str(item.Jinformation),
+                                        "PPortrait": p.PPortrait.decode('ascii'),"APID":ap.APID})
         # 正在进行中和未开设
         today = datetime.date.today()
         time_str = str(today.year)+"年"+str(today.month)+"月"+str(today.day)+"日"
@@ -95,30 +97,93 @@ def profile():
             info.Bgender = form.gender.data
 
             db.session.commit()
-            return redirect(url_for('companymanager.home'))
+            return redirect(url_for('projectmanager.home'))
         else:
             print(form.errors)
-        return render_template("companymanager/profile.html", form=form)
+        return render_template("projectmanager/profile.html", form=form)
     else:
         return render_template("error/LogInFirst.html")
 
 
 @pm_bp.route('/job-profile/<id>', methods=['GET', 'POST'])
 def job_profile(id):
-    return "A"
+    if current_user.is_authenticated:
+        form = JobForm()
+        if form.validate_on_submit():
+            job=Jobs.query.filter(Jobs.JID==id).first()
+            job.Jname=form.JName.data
+            job.salary=form.salary.data
+            job.Jcategory=form.Jcategory.data
+            job.Jinformation=form.Jinformation.data
+            job.Jexperience=form.Jexperience.data
+            job.Jddl=form.Jddl.data
+            job.JBegin=form.JBegin.data
+            job.JFinal=form.JFinal.data
+            print("success")
+            db.session.commit()
+            return redirect(url_for('projectmanager.home'))
+        else:
+            print(form.errors)
+        return render_template("projectmanager/job-profile.html", form=form)
+    else:
+        return render_template("error/LogInFirst.html")
 
 @pm_bp.route('/delete-job/<id>', methods=['GET', 'POST'])
 def delete(id):
-    return "A"
+    if current_user.is_authenticated:
+        pm = ProjectManager.query.filter(ProjectManager.id == current_user.get_id()).first()
+        p = Project.query.filter(Project.PID == pm.PID).first()
+        job=Jobs.query.filter(Jobs.JID==id).first()
+        aps=Applying.query.filter(Applying.JID==id).all()
+        for ap in aps:
+            # 恢复candidate身份
+            ca=Candidate.query.filter(ca.CAID==ap.CAID).first()
+            ca.APID.remove(ap)
+            db.session.delete(ap)
+        p.JID.remove(job)
+        db.session.delete(job)
+        db.session.commit()
+        return home()
+    else:
+        return render_template("error/LogInFirst.html")
 
 @pm_bp.route('/offer/<id>', methods=['GET', 'POST'])
 def offer(id):
-    return "A"
+    if current_user.is_authenticated:
+        ap=Applying.query.filter(Applying.APID==id).first()
+        ap.status=1
+        db.session.commit()
+        return home()
+    else:
+        return render_template("error/LogInFirst.html")
 
 @pm_bp.route('/refuse/<id>', methods=['GET', 'POST'])
 def refuse(id):
-    return "A"
+    if current_user.is_authenticated:
+        ap=Applying.query.filter(Applying.APID==id).first()
+        ap.status=2
+        db.session.commit()
+        return home()
+    else:
+        return render_template("error/LogInFirst.html")
 
 @pm_bp.route('/add-project', methods=['GET', 'POST'])
 def add():
-    return "A"
+    if current_user.is_authenticated:
+        form = JobForm()
+        if form.validate_on_submit():
+            pm = ProjectManager.query.filter(ProjectManager.id == current_user.get_id()).first()
+            p = Project.query.filter(Project.PID == pm.PID).first()
+            job1 = Jobs(Jname=form.JName.data, salary=form.salary.data, Jcategory=form.Jcategory.data,
+                        Jinformation=form.Jinformation.data, Jexperience=form.Jexperience.data, Jddl=form.Jddl.data,
+                        JBegin=form.JBegin.data, JFinal=form.JFinal.data)
+            p.JID.append(job1)
+            print("success")
+            db.session.add(job1)
+            db.session.commit()
+            return redirect(url_for('projectmanager.home'))
+        else:
+            print(form.errors)
+        return render_template("projectmanager/job-profile.html", form=form)
+    else:
+        return render_template("error/LogInFirst.html")
