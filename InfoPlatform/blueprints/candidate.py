@@ -45,7 +45,7 @@ def home():
                 offer_num += 1
             applying_list.append({"applytime": apply_time, "status": status_now, "proj_name": proj.PName,
                                  "job_name": job.Jname, "Info": "类型："+str(job.Jcategory)+"，信息："+str(job.Jinformation),
-                                  "PPortrait": proj.PPortrait.decode('ascii')})
+                                  "PPortrait": proj.PPortrait.decode('ascii'),"APID":item.APID})
 
         if request.method == 'POST':
             search_name = request.form['search_name']
@@ -334,5 +334,25 @@ def apply(id):
             db.session.commit()
             print("done")
             return home()
+    else:
+        return render_template("error/LogInFirst.html")
+
+@candidate_bp.route('/apply-delete/<id>', methods=['GET', 'POST'])
+def delete_apply(id):
+    if current_user.is_authenticated:
+        app=Applying.query.filter(
+            Applying.APID==id
+        ).first()
+        job1 = Jobs.query.filter(
+            app.JID == Jobs.JID).first()
+        ca = Candidate.query.filter(
+            current_user.get_id() == Candidate.CAID).first()
+        ca.APID.remove(app)
+        job1.APID.remove(app)
+        # 这里要检查一下有无重复申请
+        db.session.delete(app)
+        db.session.commit()
+        print("done")
+        return home()
     else:
         return render_template("error/LogInFirst.html")

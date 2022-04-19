@@ -136,8 +136,8 @@ def register_commands(app):
                     Jinformation="全职，不允许远程", Jexperience=0, Jddl=datetime.datetime.strptime("2022-6-1 00:01:01", '%Y-%m-%d %H:%M:%S'),
                     JBegin=datetime.datetime.strptime("2022-3-9 00:01:01", '%Y-%m-%d %H:%M:%S'), JFinal=datetime.datetime.strptime("2022-8-18 00:01:01", '%Y-%m-%d %H:%M:%S'))
         job3 = Jobs(Jname="土建施工图设计师", salary=21000, Jcategory="全职",
-                    Jinformation="全职，不允许远程", Jexperience=0, Jddl=datetime.datetime.strptime("2022-4-1 00:01:01", '%Y-%m-%d %H:%M:%S'),
-                    JBegin=datetime.datetime.strptime("2022-1-9 00:01:01", '%Y-%m-%d %H:%M:%S'), JFinal=datetime.datetime.strptime("2022-4-21 00:01:01", '%Y-%m-%d %H:%M:%S'))
+                    Jinformation="全职，不允许远程", Jexperience=0, Jddl=datetime.datetime.strptime("2022-6-1 00:01:01", '%Y-%m-%d %H:%M:%S'),
+                    JBegin=datetime.datetime.strptime("2022-1-9 00:01:01", '%Y-%m-%d %H:%M:%S'), JFinal=datetime.datetime.strptime("2022-8-21 00:01:01", '%Y-%m-%d %H:%M:%S'))
         job4 = Jobs(Jname="现场土建负责人", salary=7000, Jcategory="全职",
                     Jinformation="全职，不允许远程", Jexperience=0, Jddl=datetime.datetime.strptime("2022-9-1 00:01:01", '%Y-%m-%d %H:%M:%S'),
                     JBegin=datetime.datetime.strptime("2022-5-1 00:01:01", '%Y-%m-%d %H:%M:%S'), JFinal=datetime.datetime.strptime("2022-9-28 00:01:01", '%Y-%m-%d %H:%M:%S'))

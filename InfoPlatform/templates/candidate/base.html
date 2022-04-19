@@ -65,18 +65,18 @@
   </div>
   <div class="app-content">
     <div class="app-sidebar">
-      <a href="/candidate/home" class="app-sidebar-link active">
+      <a href="/candidate/home" class="app-sidebar-link active" title="主页">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home">
           <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
           <polyline points="9 22 9 12 15 12 15 22" /></svg>
       </a>
-      <a href="/candidate/orderBYproject" class="app-sidebar-link">
+      <a href="/candidate/orderBYproject" class="app-sidebar-link" title="按照项目名称排序">
         <svg class="link-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="feather feather-pie-chart" viewBox="0 0 24 24">
           <defs />
           <path d="M21.21 15.89A10 10 0 118 2.83M22 12A10 10 0 0012 2v10z" />
         </svg>
       </a>
-      <a href="/candidate/orderBYname" class="app-sidebar-link">
+      <a href="/candidate/orderBYname" class="app-sidebar-link" title="按照工作名称排序">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar">
           <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
           <line x1="16" y1="2" x2="16" y2="6" />
@@ -200,7 +200,15 @@
         <div class="message-content">
           <div class="message-header">
             <div class="name">{{item.job_name}}</div>
+            {% if item.status=="等待中" %}
+            <div class="star-checkbox">
+              <a href="/candidate/apply-delete/{{item.APID}}">
+                  <svg t="1648399135781" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3122" width="20" height="20"><path d="M828.8 195.2c-174.9-174.9-458.6-174.9-633.6 0-174.9 174.9-174.9 458.6 0 633.6 174.9 174.9 458.6 174.9 633.6 0 174.9-175 174.9-458.7 0-633.6zM664.1 886.4c-48.4 19.7-99.6 29.6-152 29.6s-103.7-9.9-152-29.6c-50.1-20.3-95.1-50.1-133.7-88.7-38.6-38.6-68.4-83.6-88.7-133.6-19.7-48.4-29.6-99.6-29.6-152s9.9-103.7 29.6-152C158 310 187.8 265 226.4 226.4S310 158 360 137.7c48.4-19.7 99.6-29.6 152-29.6 52.5 0 103.7 9.9 152 29.6 50.1 20.3 95.1 50.1 133.7 88.7C836.3 265 866.1 310 886.4 360c19.7 48.4 29.6 99.6 29.6 152s-9.9 103.7-29.6 152c-20.3 50.1-50.1 95.1-88.7 133.7-38.6 38.6-83.6 68.4-133.6 88.7z" p-id="3123" fill="#13227a"></path><path d="M710 679.6L344.4 314c-8.4-8.4-22-8.4-30.4 0-8.4 8.4-8.4 22 0 30.4L679.6 710c8.4 8.4 22 8.4 30.4 0 8.4-8.4 8.4-22 0-30.4z" p-id="3124" fill="#13227a"></path><path d="M679.6 314L314 679.6c-8.4 8.4-8.4 22 0 30.4s22 8.4 30.4 0L710 344.4c8.4-8.4 8.4-22 0-30.4-8.4-8.4-22-8.4-30.4 0z" p-id="3125" fill="#13227a"></path></svg>                </a>
+              </div>         
+              {% endif %}
+  
           </div>
+          
           <p class="message-line">
             所属项目：{{item.proj_name}}
           </p>
